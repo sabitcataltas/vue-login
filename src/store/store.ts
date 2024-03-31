@@ -1,32 +1,28 @@
-import { InjectionKey } from 'vue'
-import { createStore, useStore as baseUseStore, Store } from 'vuex'
+import { defineStore } from "pinia";
 
+export const useAuthStore = defineStore("auth", {
 
-// define your typings for the store state
-export interface State {
-  token: string
-}
+  state: () => ({
+    username: '',
+    accessToken: '',
 
-// define injection key
-export const key: InjectionKey<Store<State>> = Symbol()
-
-export const store = createStore<State>({
-  state: {
-    token: ""
-  },
-  mutations: {
-    setToken(state, token: string) {
-      state.token = token;
-    }
+  }),
+  getters: {
   },
   actions: {
-    setToken(context, token: string) {
-      context.commit('setToken', token);
+    getAuthHeader() {
+      if (this.accessToken) {
+        return "Bearer " + this.accessToken;
+      } else {
+        return false;
+      }
+    },
+    setUserToken(username: string, token: string) {
+      this.accessToken = token;
+      this.username = username;
+    },
+    getToken() {
+      return this.accessToken;
     }
   }
-})
-
-// define your own `useStore` composition function
-export function useStore() {
-  return baseUseStore(key)
-}
+});
