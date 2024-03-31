@@ -3,9 +3,10 @@ import { useAuthStore } from '@/store/store';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 
-const API_URL = 'http://localhost:8080'; 
+const API_URL = process.env.API_URL ? process.env.API_URL : "http://localhost:8080";
+
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: API_URL, 
+  baseURL: API_URL,
 });
 
 
@@ -18,12 +19,12 @@ class Service {
     this.instance = axiosInstance;
   }
 
-  authHeader() {
-    const authStore = useAuthStore();
-    let token = authStore.getToken
-  
+  authHeader(): object {
+    //const authStore = useAuthStore();
+    let token = localStorage.getItem('token');//authStore.getToken();
+    console.log(token);
     if (token) {
-      return { Authorization: 'Bearer ' + token };
+      return { headers: { Authorization: 'Bearer ' + token } };
     } else {
       return {};
     }
@@ -35,20 +36,20 @@ class Service {
   }
 
   async get<T>(url: string, config?: object): Promise<AxiosResponse<T>> {
-    return this.instance.get<T>(url, { ...this.authHeader, ...config });
+    return this.instance.get<T>(url, { ...this.authHeader(), ...config });
   }
 
   // Define a method for making a POST request
   async post<T>(url: string, data?: object, config?: object): Promise<AxiosResponse<T>> {
-    return this.instance.post<T>(url, data, { ...this.authHeader, ...config });
+    return this.instance.post<T>(url, data, { ...this.authHeader(), ...config });
   }
 
   async put<T>(url: string, data?: object, config?: object): Promise<AxiosResponse<T>> {
-    return this.instance.put<T>(url, data, { ...this.authHeader, ...config });
+    return this.instance.put<T>(url, data, { ...this.authHeader(), ...config });
   }
 
   async delete<T>(url: string, config?: object): Promise<AxiosResponse<T>> {
-    return this.instance.delete<T>(url, { ...this.authHeader, ...config });
+    return this.instance.delete<T>(url, { ...this.authHeader(), ...config });
   }
 
 }
