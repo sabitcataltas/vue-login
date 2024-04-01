@@ -139,6 +139,9 @@ async function saveUser() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -163,6 +166,9 @@ async function saveAddress() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -181,6 +187,9 @@ async function updateAddress() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -200,6 +209,9 @@ async function fetchData() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -220,6 +232,9 @@ async function fetchContactInfos() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -240,6 +255,9 @@ async function saveNewContactInfos() {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {
@@ -256,6 +274,9 @@ async function deleteContactInfo(id: number) {
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            if(error.response.status == 401) {
+                logout();
+            }
             showError(error);
         }).finally(
             () => {

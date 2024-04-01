@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/store';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 
-const API_URL = process.env.API_URL ? process.env.API_URL : "http://localhost:8080";
+const API_URL = process.env.VUE_APP_ROOT_API ? process.env.VUE_APP_ROOT_API : "http://localhost:8080";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
